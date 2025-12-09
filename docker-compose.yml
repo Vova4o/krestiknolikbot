@@ -13,4 +13,5 @@ services:
       - "traefik.http.routers.tictactoe.rule=Host(`tictactoe.vova4o.com`)"
       - "traefik.http.routers.tictactoe.entrypoints=websecure"
       - "traefik.http.routers.tictactoe.tls=true"
+      - "traefik.http.routers.tictactoe.tls.certresolver=letsencrypt"
       - "traefik.http.services.tictactoe.loadbalancer.server.port=8080"
