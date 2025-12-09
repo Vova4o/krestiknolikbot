@@ -1,0 +1,11 @@
+.git
+.idea
+.vscode
+node_modules
+tmp
+*.log
+.env
+**/.DS_Store
+bin
+dist
+coverage

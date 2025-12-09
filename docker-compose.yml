@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    container_name: tg-tictactoe-miniapp
+    environment:
+      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+      PORT: "${PORT:-8080}"
+    expose:
+      - "8080"
+    restart: unless-stopped

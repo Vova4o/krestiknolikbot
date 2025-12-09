@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Крестики-нолики</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/web/styles.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Небольшой перерыв? 💕</h1>
+      <p>Сыграем в крестики-нолики против компьютера.</p>
+    </header>
+
+    <main class="game-card">
+      <div class="status" id="statusText">Твой ход</div>
+
+      <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
+
+      <div class="result-section" id="resultSection" hidden>
+        <div class="result-title" id="resultTitle"></div>
+        <div class="promo-block" id="promoBlock" hidden>
+          <p class="promo-label">🎁 Поздравляем! Ты выиграла промокод</p>
+          <div class="promo-code" id="promoCodeText"></div>
+          <button class="btn secondary" id="copyPromoBtn">Скопировать код</button>
+        </div>
+        <button class="btn primary" id="playAgainBtn">Сыграть ещё раз</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="/web/app.js"></script>
+</body>
+</html>
