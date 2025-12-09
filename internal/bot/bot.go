@@ -84,8 +84,10 @@ type Chat struct {
 }
 
 type getUpdatesResponse struct {
-	OK     bool     `json:"ok"`
-	Result []Update `json:"result"`
+	OK          bool     `json:"ok"`
+	Result      []Update `json:"result"`
+	ErrorCode   int      `json:"error_code,omitempty"`
+	Description string   `json:"description,omitempty"`
 }
 
 func (b *BotClient) StartLongPolling() error {
@@ -118,13 +120,18 @@ func (b *BotClient) getUpdates() ([]Update, error) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("getUpdates status %d: %s", resp.StatusCode, string(body))
+	}
+
 	var result getUpdatesResponse
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return nil, fmt.Errorf("decode getUpdates response: %w", err)
 	}
 
 	if !result.OK {
-		return nil, fmt.Errorf("getUpdates not ok")
+		return nil, fmt.Errorf("getUpdates not ok: code=%d desc=%s", result.ErrorCode, result.Description)
 	}
 
 	return result.Result, nil
