@@ -23,7 +23,7 @@ func NewBotClient(token string) *BotClient {
 		token:  token,
 		apiURL: "https://api.telegram.org",
 		client: &http.Client{
-			Timeout: 10 * time.Second,
+			Timeout: 60 * time.Second, // allow long polling responses (Telegram timeout=20s)
 		},
 	}
 }
