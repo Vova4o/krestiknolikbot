@@ -76,11 +76,19 @@ type Update struct {
 type Message struct {
 	MessageID int64  `json:"message_id"`
 	Chat      Chat   `json:"chat"`
+	From      *User  `json:"from,omitempty"`
 	Text      string `json:"text,omitempty"`
 }
 
 type Chat struct {
 	ID int64 `json:"id"`
+}
+
+type User struct {
+	ID        int64  `json:"id"`
+	Username  string `json:"username"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
 }
 
 type getUpdatesResponse struct {
@@ -149,6 +157,15 @@ func (b *BotClient) HandleUpdate(u *Update) {
 }
 
 func (b *BotClient) handleMessage(m *Message) {
+	// Log sender info for visibility in webhook calls.
+	userID := m.Chat.ID
+	username := ""
+	if m.From != nil {
+		userID = m.From.ID
+		username = m.From.Username
+	}
+	log.Printf("Webhook message: user_id=%d username=%s text=%q", userID, username, m.Text)
+
 	if m.Text == "/start" {
 		_ = b.SendMessage(m.Chat.ID, "Привет! 👋\n\nНажми кнопку Mini App внизу, чтобы сыграть в крестики-нолики 💕")
 		return
