@@ -57,9 +57,3 @@ docker-compose up --build
 - Защитите домен HTTPS (для mini app внутри Telegram обязателен HTTPS).
 - При деплое убедитесь, что `PORT` открыт и статика из `web/` доступна по `/web/`.
 
-export TELEGRAM_BOT_TOKEN='8511938965:AAGa_N1IJurukyfui3MttOv_6FkbARao_YI'
-export TELEGRAM_WEBHOOK_SECRET='8cbe1719ad6bd1589f775fe09f8976c6582865d5713b2833d0119ab747fbb1ab'
-curl -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook" \
-  -d "url=https://tictactoe.vova4o.com/api/telegram/webhook" \
-  -d "secret_token=$TELEGRAM_WEBHOOK_SECRET" \
-  -d "drop_pending_updates=true"
