@@ -137,6 +137,17 @@ func (b *BotClient) getUpdates() ([]Update, error) {
 	return result.Result, nil
 }
 
+// HandleUpdate processes a single webhook update from Telegram.
+func (b *BotClient) HandleUpdate(u *Update) {
+	if u == nil {
+		return
+	}
+	if u.Message == nil {
+		return
+	}
+	b.handleMessage(u.Message)
+}
+
 func (b *BotClient) handleMessage(m *Message) {
 	if m.Text == "/start" {
 		_ = b.SendMessage(m.Chat.ID, "Привет! 👋\n\nНажми кнопку Mini App внизу, чтобы сыграть в крестики-нолики 💕")

@@ -16,8 +16,35 @@ type ResultRequest struct {
 }
 
 func RegisterRoutes(r *gin.Engine, botClient *bot.BotClient) {
+	webhookSecret := os.Getenv("TELEGRAM_WEBHOOK_SECRET")
+
 	// Serve static mini app assets.
 	r.StaticFS("/web", http.Dir("web"))
+	r.StaticFile("/robots.txt", "web/robots.txt")
+
+	// Redirect root to the mini app to avoid noisy 404s.
+	r.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusTemporaryRedirect, "/web/")
+	})
+
+	// Telegram webhook endpoint (use instead of long polling).
+	r.POST("/api/telegram/webhook", func(c *gin.Context) {
+		if webhookSecret != "" {
+			if c.GetHeader("X-Telegram-Bot-Api-Secret-Token") != webhookSecret {
+				c.AbortWithStatus(http.StatusUnauthorized)
+				return
+			}
+		}
+
+		var update bot.Update
+		if err := c.ShouldBindJSON(&update); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid update"})
+			return
+		}
+
+		botClient.HandleUpdate(&update)
+		c.Status(http.StatusOK)
+	})
 
 	// Game result endpoint.
 	r.POST("/api/result", func(c *gin.Context) {

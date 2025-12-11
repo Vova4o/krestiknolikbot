@@ -38,14 +38,6 @@ func main() {
 	// Register web and API routes.
 	webapp.RegisterRoutes(router, botClient)
 
-	// Start Telegram bot long polling in a separate goroutine.
-	go func() {
-		log.Println("Starting Telegram bot long polling...")
-		if err := botClient.StartLongPolling(); err != nil {
-			log.Printf("Telegram bot stopped with error: %v", err)
-		}
-	}()
-
 	// Start HTTP server.
 	go func() {
 		addr := ":" + port
