@@ -1,6 +1,7 @@
 package webapp
 
 import (
+	"log"
 	"net/http"
 	"os"
 
@@ -70,6 +71,8 @@ func RegisterRoutes(r *gin.Engine, botClient *bot.BotClient) {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid initData"})
 			return
 		}
+
+		log.Printf("Result from Telegram user id=%d username=%s result=%s", user.ID, user.Username, req.Result)
 
 		var messageText string
 

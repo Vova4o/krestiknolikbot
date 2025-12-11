@@ -2,6 +2,8 @@
 
 Мини-приложение Telegram, которое запускается через официальную Menu Button и предлагает сыграть в крестики-нолики против компьютера. При победе фронтенд отправляет результат на backend, который верифицирует `initData`, извлекает `user.id` и отправляет пользователю сообщение с промокодом.
 
+Боевой бот: https://t.me/tictaktest_bot
+
 ## Что входит
 
 - Backend на Go (Gin + long polling Telegram Bot API)
@@ -56,4 +58,3 @@ docker-compose up --build
 - Храните `TELEGRAM_BOT_TOKEN` в переменных окружения/secret manager.
 - Защитите домен HTTPS (для mini app внутри Telegram обязателен HTTPS).
 - При деплое убедитесь, что `PORT` открыт и статика из `web/` доступна по `/web/`.
-

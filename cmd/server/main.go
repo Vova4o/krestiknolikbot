@@ -21,7 +21,6 @@ func main() {
 	if token == "" {
 		log.Fatal("TELEGRAM_BOT_TOKEN is not set")
 	}
-	log.Printf("TELEGRAM_BOT_TOKEN=%s", token)
 
 	port := os.Getenv("PORT")
 	if port == "" {
